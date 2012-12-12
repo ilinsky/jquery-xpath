@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	// =================================================================
+	// ANT Build Script for XPath 2 jQuery Plugin project
+	// =================================================================
+-->
+<project name="Project Build Script - XPath 2.0 jQuery Plugin" default="BUILD" basedir=".">
+	<!-- Local properties -->
+	<property file="build.properties" />
+
+	<!-- System properties -->
+	<tstamp>
+		<format property="tstamp.full" pattern="yyyy-MM-dd HH:mm:ss" locale="en" />
+		<format property="tstamp.year" pattern="yyyy" locale="en" />
+		<format property="tstamp.stmp" pattern="ddSSS" locale="en" />
+	</tstamp>
+
+	<!-- Project-related -->
+	<property name="copyright.year" value="${tstamp.year}" />
+	<property name="copyright.name" value="Sergey Ilinsky" />
+
+	<!-- Build-related -->
+	<property name="build.package" value="xpath2-${project.version}" />
+	<property name="build.signature" value="${tstamp.full}" />
+
+	<property name="temp.dir" value="${build.dir}/temp/"/>
+	<property name="work.dir" value="${build.dir}/work/"/>
+
+	<property name="target.dir" value="${work.dir}/${build.package}/"/>
+	<property name="target.zip" value="${work.dir}/${build.package}.zip"/>
+
+	<property name="copying.js" value="res/build/COPYING.js" />
+
+	<!-- Master build -->
+	<target name="BUILD" description="Builds XPath 2.0 jQuery plugin project">
+
+		<delete dir="${target.dir}" failonerror="false"/>
+		<delete file="${target.zip}" />
+
+		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${target.dir}" />
+
+		<antcall target="BUILD_XPATH2" />
+
+		<copy file="COPYING" tofile="${target.dir}/COPYING" />
+
+		<!-- Zip finally -->
+		<zip destfile="${target.zip}">
+			<zipfileset dir="${target.dir}" prefix="${build.package}"/>
+		</zip>
+	</target>
+
+	<!-- Core -->
+	<target name="BUILD_XPATH2">
+
+		<property name="temp.build.dir" value="${temp.dir}${tstamp.full}" />
+
+		<mkdir dir="${temp.build.dir}" />
+
+		<antcall target="BUILD_XPATH2_PREPARE_CORE" />
+		<antcall target="BUILD_XPATH2_PREPARE_ADAPTERS" />
+		<antcall target="BUILD_XPATH2_API" />
+
+		<delete dir="${temp.build.dir}" />
+	</target>
+
+	<target name="BUILD_XPATH2_PREPARE_CORE">
+		<echo message="Building XPath2 core: ${temp.build.dir}/xpath2-core-raw.js" level="info"/>
+
+		<property name="source.core" value="src/" />
+
+		<concat destfile="${temp.build.dir}/xpath2-core-raw.js" fixlastline="yes">
+			<filelist dir="${source.core}/" files="
+				import.js"/>
+			<filelist dir="${source.core}/classes/" files="
+				Exception.js,
+				Lexer.js,
+				DOMAdapter.js,
+				DynamicContext.js,
+				StaticContext.js,
+				Expression.js,
+				StringCollator.js,
+				XSConstants.js"/>
+			<filelist dir="${source.core}/expressions/" files="
+				Expr.js,
+				ExprSingle.js,
+				for/ForExpr.js,
+				if/IfExpr.js,
+				quantified/QuantifiedExpr.js,
+				comparison/ComparisonExpr.js,
+				arithmetic/AdditiveExpr.js,
+				arithmetic/MultiplicativeExpr.js,
+				arithmetic/UnaryExpr.js,
+				arithmetic/ValueExpr.js,
+				logical/OrExpr.js,
+				logical/AndExpr.js,
+				path/StepExpr.js,
+				path/AxisStep.js,
+				path/PathExpr.js,
+				path/tests/NodeTest.js,
+				path/tests/KindTest.js,
+				path/tests/NameTest.js,
+				primary/PrimaryExpr.js,
+				primary/ParenthesizedExpr.js,
+				primary/ContextItemExpr.js,
+				primary/Literal.js,
+				primary/NumericLiteral.js,
+				primary/StringLiteral.js,
+				primary/FilterExpr.js,
+				primary/VarRef.js,
+				primary/FunctionCall.js,
+				sequence/IntersectExceptExpr.js,
+				sequence/RangeExpr.js,
+				sequence/UnionExpr.js,
+				type/InstanceofExpr.js,
+				type/TreatExpr.js,
+				type/CastableExpr.js,
+				type/CastExpr.js,
+				type/types/AtomicType.js,
+				type/types/ItemType.js,
+				type/types/SequenceType.js,
+				type/types/SingleType.js"/>
+			<filelist dir="${source.core}/types/" files="
+				XSAnyType.js,
+				XSAnySimpleType.js,
+				simple/XSAnyAtomicType.js,
+				simple/atomic/XSAnyURI.js,
+				simple/atomic/XSBase64Binary.js,
+				simple/atomic/XSBoolean.js,
+				simple/atomic/XSDate.js,
+				simple/atomic/XSDateTime.js,
+				simple/atomic/XSDecimal.js,
+				simple/atomic/XSDouble.js,
+				simple/atomic/XSDuration.js,
+				simple/atomic/XSFloat.js,
+				simple/atomic/XSGDay.js,
+				simple/atomic/XSGMonth.js,
+				simple/atomic/XSGMonthDay.js,
+				simple/atomic/XSGYear.js,
+				simple/atomic/XSGYearMonth.js,
+				simple/atomic/XSHexBinary.js,
+				simple/atomic/XSNOTATION.js,
+				simple/atomic/XSQName.js,
+				simple/atomic/XSString.js,
+				simple/atomic/XSTime.js,
+				simple/atomic/XSUntypedAtomic.js,
+				simple/atomic/duration/XSYearMonthDuration.js,
+				simple/atomic/duration/XSDayTimeDuration.js,
+				simple/atomic/integer/XSInteger.js,
+				simple/atomic/integer/XSNonPositiveInteger.js,
+				simple/atomic/integer/XSNegativeInteger.js,
+				simple/atomic/integer/XSLong.js,
+				simple/atomic/integer/XSInt.js,
+				simple/atomic/integer/XSShort.js,
+				simple/atomic/integer/XSByte.js,
+				simple/atomic/integer/XSNonNegativeInteger.js,
+				simple/atomic/integer/XSPositiveInteger.js,
+				simple/atomic/integer/XSUnsignedLong.js,
+				simple/atomic/integer/XSUnsignedInt.js,
+				simple/atomic/integer/XSUnsignedShort.js,
+				simple/atomic/integer/XSUnsignedByte.js,
+				simple/atomic/string/XSNormalizedString.js,
+				simple/atomic/string/XSToken.js,
+				simple/atomic/string/XSName.js,
+				simple/atomic/string/XSNCName.js,
+				simple/atomic/string/XSENTITY.js,
+				simple/atomic/string/XSID.js,
+				simple/atomic/string/XSLanguage.js,
+				simple/atomic/string/XSNMTOKEN.js"/>
+			<filelist dir="${source.core}/types/" files="
+				XTItem.js,
+				XTNode.js,
+				node/XTAttribute.js,
+				node/XTComment.js,
+				node/XTDocument.js,
+				node/XTElement.js,
+				node/XTProcessingInstruction.js,
+				node/XTText.js"/>
+			<filelist dir="${source.core}/operators/" files="
+				binary.js,
+				boolean.js,
+				date.js,
+				node.js,
+				notation.js,
+				numeric.js,
+				qname.js,
+				sequence.js"/>
+			<filelist dir="${source.core}/functions/" files="
+				accessor.js,
+				anyuri.js,
+				boolean.js,
+				context.js,
+				date.js,
+				node.js,
+				numeric.js,
+				qname.js,
+				sequence.js,
+				string.js,
+				trace.js"/>
+			<filelist dir="${source.core}/collators/" files="
+				CodepointStringCollator.js"/>
+		</concat>
+	</target>
+
+	<target name="BUILD_XPATH2_PREPARE_ADAPTERS">
+		<echo message="Building XPath2 adapters: ${temp.build.dir}/xpath2-adapters-raw.js" level="info"/>
+
+		<property name="source.adapters" value="adapters/" />
+
+		<concat destfile="${temp.build.dir}/xpath2-adapters-raw.js" fixlastline="yes">
+			<filelist dir="${source.adapters}/classes/" files="
+				LXDOMAdapter.js"/>
+			<filelist dir="${source.adapters}/" files="
+				MSHTMLDOMAdapter.js,
+				MSXMLDOMAdapter.js"/>
+		</concat>
+	</target>
+
+	<target name="BUILD_XPATH2_API_JQUERY">
+		<echo message="Building XPath2 jQuery API: ${target.dir}/xpath2-jquery.js" level="info"/>
+
+		<property name="source.api.jquery" value="${source.api}/xpath2-jquery/" />
+
+		<concat destfile="${temp.build.dir}/xpath2-api-jquery-raw.js" fixlastline="yes">
+			<filelist dir="${temp.build.dir}/" files="
+				xpath2-core-raw.js"/>
+			<filelist dir="${temp.build.dir}/" files="
+				xpath2-adapters-raw.js"/>
+			<filelist dir="${source.api.jquery}/" files="
+				xpath2-jquery.js"/>
+		</concat>
+
+		<!-- -->
+		<exec executable="${executable.php}" failonerror="true">
+			<arg value="res/build/compiler/js.php" />
+			<arg value="${temp.build.dir}/xpath2-api-jquery-raw.js" />
+			<arg value="${temp.build.dir}/xpath2-api-jquery.js" />
+			<arg value="--obfuscate" />
+			<arg value="--strip-Source" />
+			<!--arg value="- -strip-Debug" />
+			<arg value="- -strip-Guard" /-->
+		</exec>
+		<replace file="${temp.build.dir}/xpath2-api-jquery.js">
+			<replacefilter token="@project_version@"	value="${project.name}/${project.version} (build:${build.signature}; prod)"	/>
+			<replacefilter token="@project_userAgent@"	value="${project.name}/${project.version}"	/>
+		</replace>
+		<concat destfile="${target.dir}/xpath2-jquery.js" fixlastline="yes">
+			<fileset file="${copying.js}" />
+			<fileset file="${temp.build.dir}/xpath2-api-jquery.js" />
+		</concat>
+	</target>
+</project>

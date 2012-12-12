@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>XPath 2.0 parse tests</title>
+		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<script type="text/javascript" src="../jquery.xpath2.js"></script>
+		<style>
+			body {
+				font-family: Arial;
+				font-size: 0.8em;
+			}
+			p {
+				margin-top: 0.5em;
+				margin-bottom: 0.5em;
+			}
+		</style>
+	</head>
+	<body>
+		<script>
+		(function() {
+			var tests	= [
+				["//body",		[document.body], document],
+				["body",		[], document],
+				["2 + 2 * 2",	[6]],
+				["0.2 + 0.1",	[0.3]],
+				["for $a in (1 to 3), $b in (4 to 6) return $a * $b",	[4,5,6,8,10,12,12,15,18]],
+				["current-date() + xs:yearMonthDuration('P1Y')"],
+				["current-dateTime() - xs:dayTimeDuration('P1D')"],
+				["0.2 *"],
+			];
+			//
+			document.write('<ol>');
+			for (var n = 0, test, res; test = tests[n]; n++) {
+				document.write('<li>Testing: <strong>' + test[0] + '</strong>' + (test[2] ? ' <span style="font-style:italic;">(with ' + test[2] + ' as evaluation context)</span>' : ''));
+				try {
+					// Evaluate
+					res = $.xpath(test[0], test[2]);
+					//
+					document.write('<p>Results: [' + res.toArray() + ']');
+					if (typeof test[1] == "undefined")
+						document.write(' <span style="color:gray">Could not expect specific value.. Got something!</span> ');
+					else {
+						document.write(' <span style="color:gray">Expected: [' + test[1] + ']</span> ');
+						//
+						var pass	= res.length == test[1].length;
+						for (var i = 0, l = test[1].length; (i < l) && pass; i++)
+							if (res[i] != test[1][i])
+								pass	= false;
+						//
+						if (pass)
+							document.write('<span style="color:green">OK!</span>');
+						else
+							document.write('<span style="color:red">FAIL!</span>');
+					}
+					document.write("</p>");
+				}
+				catch (e) {
+					document.write('<p style="color:red">Error thrown: [' + e.code + '] ' + e.message + '</p>');
+				}
+				document.write('</li>');
+			}
+			document.write('</ol>');
+		})();
+		</script>
+	</body>
+</html>
