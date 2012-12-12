@@ -49,7 +49,7 @@ function fXPath2_evaluate(sExpression, oQuery, fNSResolver) {
 		oAdapter	= "selectNodes" in oNode ? oMSXMLDOMAdapter : oMSHTMLDOMAdapter;
 
 	// Evaluate expression
-	aSequence	= oExpression.evaluate(new cDynamicContext(oExpression.staticContext, oNode, null, oAdapter));
+	aSequence	= oExpression.evaluate(new cDynamicContext(oStaticContext, oNode, null, oAdapter));
 	for (var nIndex = 0, nLength = aSequence.length, oItem; nIndex < nLength; nIndex++)
 		oSequence.push(oAdapter.isNode(oItem = aSequence[nIndex]) ? oItem : cStaticContext.xs2js(oItem));
 
