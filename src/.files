@@ -1,5 +1,5 @@
 # XPath 2 engine
-../../xpath2.js/src/.files
+xpath2.js/src/.files
 # Browser adapters
 adapters/classes/LXDOMAdapter.js
 adapters/MSHTMLDOMAdapter.js

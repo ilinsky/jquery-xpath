@@ -1,0 +1,3 @@
+[submodule "src/xpath2.js"]
+	path = src/xpath2.js
+	url = git://github.com/ilinsky/xpath2.js.git
