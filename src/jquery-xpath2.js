@@ -8,6 +8,7 @@
  */
 
 var cHTMLDocument	= window.HTMLDocument,
+	cQuery		= window.jQuery,
 	oDocument	= window.document,
 	bOldMS	= !!oDocument.namespaces && !oDocument.createElementNS;	// Internet Explorer before 9
 
@@ -39,7 +40,7 @@ function fXPath2_evaluate(sExpression, oQuery, fNSResolver) {
 
 	// Evaluate expression
 	var aSequence,
-		oSequence	= new jQuery,
+		oSequence	= new cQuery,
 		oAdapter	= oLXDOMAdapter;
 
 	// Evaluate expression
@@ -57,14 +58,14 @@ function fXPath2_evaluate(sExpression, oQuery, fNSResolver) {
 };
 
 // Extend jQuery
-jQuery.extend(jQuery, {
-	"xpath":	function(sExpression, oQuery, fNSResolver) {
-		return fXPath2_evaluate(sExpression, oQuery instanceof jQuery ? oQuery : new jQuery(oQuery), fNSResolver);
-	}
-});
+var oObject	= {};
+oObject.xpath	= function(sExpression, oQuery, fNSResolver) {
+	return fXPath2_evaluate(sExpression, oQuery instanceof cQuery ? oQuery : new cQuery(oQuery), fNSResolver);
+};
+cQuery.extend(cQuery, oObject);
 
-jQuery.extend(jQuery.prototype, {
-	"xpath":	function(sExpression, fNSResolver) {
-		return fXPath2_evaluate(sExpression, this, fNSResolver);
-	}
-});
+oObject	= {};
+oObject.xpath	= function(sExpression, fNSResolver) {
+	return fXPath2_evaluate(sExpression, this, fNSResolver);
+};
+cQuery.extend(cQuery.prototype, oObject);
