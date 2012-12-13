@@ -27,7 +27,7 @@ oHTMLStaticContext.defaultElementNamespace	= "http://www.w3.org/1999/xhtml";
 oXMLStaticContext.defaultFunctionNamespace	= oHTMLStaticContext.defaultFunctionNamespace;
 
 //
-function fXPath2_evaluate(sExpression, oQuery, fNSResolver) {
+function fXPath2_evaluate(oQuery, sExpression, fNSResolver) {
 	var oNode	= oQuery[0];
 	if (typeof oNode == "undefined")
 		oNode	= null;
@@ -59,13 +59,13 @@ function fXPath2_evaluate(sExpression, oQuery, fNSResolver) {
 
 // Extend jQuery
 var oObject	= {};
-oObject.xpath	= function(sExpression, oQuery, fNSResolver) {
-	return fXPath2_evaluate(sExpression, oQuery instanceof cQuery ? oQuery : new cQuery(oQuery), fNSResolver);
+oObject.xpath	= function(oQuery, sExpression, fNSResolver) {
+	return fXPath2_evaluate(oQuery instanceof cQuery ? oQuery : new cQuery(oQuery), sExpression, fNSResolver);
 };
 cQuery.extend(cQuery, oObject);
 
 oObject	= {};
 oObject.xpath	= function(sExpression, fNSResolver) {
-	return fXPath2_evaluate(sExpression, this, fNSResolver);
+	return fXPath2_evaluate(this, sExpression, fNSResolver);
 };
 cQuery.extend(cQuery.prototype, oObject);
