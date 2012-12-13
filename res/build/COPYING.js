@@ -1,6 +1,6 @@
 /*
- * @project.name@ @project.version@
- * https://github.com/ilinsky/jquery-xpath2.js
+ * @project.name@ v@project.version@
+ * https://github.com/ilinsky/jquery-xpath2
  * Copyright 2012, Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
