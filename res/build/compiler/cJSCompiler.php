@@ -61,11 +61,9 @@
 			// strip carriage returns
 			$sData	= preg_replace("/\r\n|\r|\n/",	"",			$sData);
 			// strip all more than one spaces
-			$sData	= preg_replace("/\s\s+/",		"",			$sData);
+			$sData	= preg_replace("/\s\s+/",		" ",		$sData);
 
-			// correct the bug produced above
-			$sData	= str_replace("else",		"else ",	$sData);
-			$sData	= str_replace("else {",		"else{",	$sData);
+			// Additional tweaks
 			$sData	= str_replace(";}",			"}",		$sData);
 
 			$this->output	= $sData;
