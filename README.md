@@ -1,14 +1,14 @@
 jQuery XPath 2 plugin
 =============
 
-This plugin features full XPath 2.0 query language support for HTML and XML documents in all web browsers.
-It features DOM-agnostic XPath 2.0 engine [xpath2.js](https://github.com/ilinsky/xpath2.js) with internal strong XML Schema 1.1 data typing.
+This plugin is a fully featured XPath 2.0 query language. It supports both HTML and XML documents in all web browsers.
+It uses the DOM-agnostic XPath 2.0 engine [xpath2.js](https://github.com/ilinsky/xpath2.js) which internally supports a strong XML Schema 1.1 data typing.
 
 Usage
 -----------------
 
-Grab and include with your page ` jquery.xpath2.js ` or ` jquery.xpath2.min.js ` file.
-Note that the 'min' version lacks of detailed error messages and it is efficiently packed.
+Download and include ` jquery.xpath2.js ` or ` jquery.xpath2.min.js ` file on your page.
+Please be aware that the 'min' version does not have the detailed error messages that the ` jquery.xpath2.js ` has but has been efficiently minimised to reduce its file size.
 
 ```html
 <script type="text/javascript" src="jquery.xpath2.js"></script>
@@ -17,21 +17,21 @@ Note that the 'min' version lacks of detailed error messages and it is efficient
 API Reference
 -----------------
 
-jQuery XPath 2 plugin comes with only two basic functions:
+jQuery XPath 2 plugin comes with two easy to use entrance points:
 
 1. ` $(context).xpath(expression, resolver) `
 2. ` $.xpath(context, expression, resolver) `
 
-In both cases function type `resolver` parameter is optional and it is only needed when expression contains prefixes.
-The node type `context` parameter is not neccessary in case expression does not touch document.
+In both cases the `resolver` function type parameter is optional and is only needed when the expression contains prefixes.
+In cases where the expression does not touch the document, the node type `context` parameter is not required.
 
 ### Running queries with context ###
 
 ```js
-$(document).xpath("*"); // Returns element html (direct child of context item)
-$(document).xpath("//head << //body"); // Returns boolean true (head is preceding body)
-$(document).xpath("//*[parent::html][last()]") // Returns element body (last child of html)
-$(document.body).xpath("count(ancestor-or-self::node())"); // Returns number 3 (3 ancestor nodes)
+$(document).xpath("*"); // Returns an html element (direct child of context item)
+$(document).xpath("//head << //body"); // Returns true or false on whether the head is preceding the body
+$(document).xpath("//*[parent::html][last()]") // Returns the html element body's last child
+$(document.body).xpath("count(ancestor-or-self::node())"); // Returns number of elements in an ancestor nodes (in this case returns 3)
 $(document.body).xpath("preceding-sibling::element()"); // Returns element head (body prev sibling)
 $(document.documentElement).xpath("body | head"); // Returns element head and body (document order)
 $(document.documentElement).xpath("body, head"); // Returns element body and head (not ordered)
@@ -63,10 +63,12 @@ $(document).xpath("//my:body", function(prefix) {
 
 Error reporting
 -----------------
+The jQuery XPath 2 plugin will report syntax and evaluation errors with a great level of detail.
+Unlike browser's native XPath 1.0 processing which have very poor error reporting and XPath expressions not being that easy, 
+it is extremely helpful to have good level of feedback from the processor.
 
-XPath expressions ain't easy, so a good feedback from a processor is extremely helpful.
-Unlike browser's native XPath 1.0 with poor error reporting, jQuery XPath 2 plugin will report syntax errors and evaluation errors with great level of detail.
-Take a look at the examples below.
+
+Below are examples of the detailed error reporting.
 
 ### Syntax errors ###
 ```js
@@ -85,13 +87,13 @@ $().xpath("max((1,''))"); // Throws "Error: Input to max() contains a mix of not
 
 ### XPath 2.0 trace() function ###
 
-There is very helpful XPath 2.0 ``` trace ``` function,
-that will let you print result of sub-expression during its evaluation right into browser console log.
-Function ``` trace ``` takes 2 required arguments: first - any type, second - string, it prints its arguments to the console and returns first argument to the evaluator.
+``` trace ``` is a very helpful XPath 2.0 function, that will let you print the result of sub-expression 
+during its evaluation right into browser console log. 
+Function ``` trace ``` requires 2 arguments: first - any type, second - string, it prints its arguments to the console and returns the first argument to the evaluator.
 
 ```js
 $().xpath("for $a in (1, 2), $b in (3 to 4) return trace($b, 'b: ') - $a"); // See browser console
 ```
 
-Just bear in mind, the items reported will either have type of nodes, or XML Schema simple data types ;)
+Bear in mind that the items reported will either have a type of nodes, or XML Schema simple data types ;)
 
