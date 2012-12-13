@@ -34,7 +34,7 @@
 	if (in_array("--obfuscate", $_SERVER["argv"])) {
 
 		$oCompiler	= new cJSCompiler;
-		$oCompiler->keyword	= "xpathed";
+		$oCompiler->keyword	= "packed";
 		$oCompiler->readFromString($sOutput);
 
 		echo "Obfuscating contents\n";
