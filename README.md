@@ -68,14 +68,14 @@ XPath expressions ain't easy, so a good feedback from a processor is extremely h
 Unlike browser's native XPath 1.0 with poor error reporting, jQuery XPath 2 plugin will report syntax errors and evaluation errors with great level of detail.
 Take a look at the examples below.
 
-Syntax errors:
+### Syntax errors ###
 ```js
 $().xpath("1 to "); // Throw "Error: Expected second operand in range expression"
 $().xpath("$*"); // Throws: "Error: Illegal use of wildcard in var expression variable name"
 $(document).xpath("self::document()"); // Throws: "Error: Unknown 'document' kind test"
 ```
 
-Evaluation errors:
+### Evaluation errors ###
 
 ```js
 $().xpath("1+'2'") // Throws "Error: Arithmetic operator is not defined for provided arguments"
@@ -83,11 +83,15 @@ $().xpath("self::node()"); // Throws "Error: In an axis step, the context item i
 $().xpath("max((1,''))"); // Throws "Error: Input to max() contains a mix of not comparable values"
 ```
 
-And one more thing. There is very helpful XPath 2.0 ``` trace ``` function,
+### XPath 2.0 trace() function ###
+
+There is very helpful XPath 2.0 ``` trace ``` function,
 that will let you print result of sub-expression during its evaluation right into browser console log.
 Function ``` trace ``` takes 2 required arguments: first - any type, second - string, it prints its arguments to the console and returns first argument to the evaluator.
-Just bear in mind, the items reported will either have type of nodes, or XML Schema simple data types ;)
 
 ```js
 $().xpath("for $a in (1, 2), $b in (3 to 4) return trace($b, 'b: ') - $a"); // See browser console
 ```
+
+Just bear in mind, the items reported will either have type of nodes, or XML Schema simple data types ;)
+
