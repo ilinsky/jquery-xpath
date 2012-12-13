@@ -127,7 +127,7 @@ cLXDOMAdapter.prototype.lookupNamespaceURI	= function(oNode, sPrefix) {
 			return this.getProperty(oNode, "namespaceURI");
 		else
 		if (oNode.nodeType == 1)	// cNode.ELEMENT_NODE
-			for (var oAttributes = this.getProperty(oNode, "attributes"), nIndex = 0, nLength = oAttributes.length, sName = "xmlns:" + sPrefix; nIndex < nLength; nIndex++)
+			for (var oAttributes = this.getProperty(oNode, "attributes"), nIndex = 0, nLength = oAttributes.length, sName = "xmlns" + ':' + sPrefix; nIndex < nLength; nIndex++)
 				if (this.getProperty(oAttributes[nIndex], "nodeName") == sName)
 					return this.getProperty(oAttributes[nIndex], "value");
 	return null;
