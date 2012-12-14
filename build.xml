@@ -19,8 +19,8 @@
 	<property name="build.package" value="${project.version}" />
 	<property name="build.signature" value="${tstamp.full}" />
 
-	<property name="temp.dir" value="${build.dir}/tmp/"/>
-	<property name="work.dir" value="${build.dir}/bin/"/>
+	<property name="temp.dir" value="${build.dir}/temp/"/>
+	<property name="work.dir" value="${build.dir}/work/"/>
 
 	<property name="target.dir" value="${work.dir}/${build.package}/"/>
 

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>XPath 2.0 parse tests</title>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<title>jQuery XPath 2 plugin test page</title>
+		<script type="text/javascript" src="lib/jquery.min.js"></script>
 		<script type="text/javascript" src="../jquery.xpath2.js"></script>
-		<style>
+		<style type="text/css">
 			body {
 				font-family: Arial;
 				font-size: 0.8em;
@@ -16,7 +16,7 @@
 		</style>
 	</head>
 	<body>
-		<script>
+		<script type="text/javascript">
 		(function() {
 			var tests	= [
 				["//body",		[document.body], document],
@@ -34,7 +34,7 @@
 				document.write('<li>Testing: <strong>' + test[0] + '</strong>' + (test[2] ? ' <span style="font-style:italic;">(with ' + test[2] + ' as evaluation context)</span>' : ''));
 				try {
 					// Evaluate
-					res = $.xpath(test[0], test[2]);
+					res = $(test[2]).xpath(test[0]);
 					//
 					document.write('<p>Results: [' + res.toArray() + ']');
 					if (typeof test[1] == "undefined")

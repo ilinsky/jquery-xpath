@@ -1,5 +1,5 @@
 /*
- * XPath2.js - Pure JavaScript implementation of XPath 2.0 parser and evaluator
+ * jQuery XPath 2 plugin (with full XPath 2.0 language support)
  *
  * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
@@ -7,6 +7,7 @@
  *
  */
 
+// Source code loader
 (function() {
 	// Get base folder
 	var scripts	= document.getElementsByTagName("script"),
