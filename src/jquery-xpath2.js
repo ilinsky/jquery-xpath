@@ -10,7 +10,7 @@
 var cHTMLDocument	= window.HTMLDocument,
 	cQuery		= window.jQuery,
 	oDocument	= window.document,
-	bOldMS	= !!oDocument.namespaces && !oDocument.createElementNS;	// Internet Explorer before 9
+	bOldMS	= !!oDocument.namespaces && !oDocument.createElementNS;	// Internet Explorer 8 or older
 
 //
 var oLXDOMAdapter	= new cLXDOMAdapter,
@@ -28,28 +28,37 @@ oXMLStaticContext.defaultFunctionNamespace	= oHTMLStaticContext.defaultFunctionN
 
 //
 function fXPath2_evaluate(oQuery, sExpression, fNSResolver) {
+	// Return empty jQuery object if expression missing
+	if (typeof sExpression == "undefined" || sExpression === null)
+		sExpression	= '';
+
+	// Check if context specified
 	var oNode	= oQuery[0];
 	if (typeof oNode == "undefined")
 		oNode	= null;
 
+	// Choose static context
 	var oStaticContext	= oNode && (oNode == oDocument || oNode.ownerDocument == oDocument) ? oHTMLStaticContext : oXMLStaticContext;
+
+	// Set static context's resolver
 	oStaticContext.namespaceResolver	= fNSResolver;
 
-	// Create expression
-	var oExpression	= new cExpression(sExpression, oStaticContext);
+	// Create expression tree
+	var oExpression	= new cExpression(cString(sExpression), oStaticContext);
+
+	// Rest static context's resolver
+	oStaticContext.namespaceResolver	= null;
 
 	// Evaluate expression
 	var aSequence,
 		oSequence	= new cQuery,
 		oAdapter	= oLXDOMAdapter;
 
-	// Evaluate expression
-
 	// Determine which DOMAdapter to use based on browser and DOM type
 	if (oNode && oNode.nodeType && bOldMS)
 		oAdapter	= "selectNodes" in oNode ? oMSXMLDOMAdapter : oMSHTMLDOMAdapter;
 
-	// Evaluate expression
+	// Evaluate expression tree
 	aSequence	= oExpression.evaluate(new cDynamicContext(oStaticContext, oNode, null, oAdapter));
 	for (var nIndex = 0, nLength = aSequence.length, oItem; nIndex < nLength; nIndex++)
 		oSequence.push(oAdapter.isNode(oItem = aSequence[nIndex]) ? oItem : cStaticContext.xs2js(oItem));
