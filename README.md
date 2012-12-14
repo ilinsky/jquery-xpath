@@ -66,7 +66,7 @@ $(document).xpath("//my:body", function(prefix) {
 Error reporting
 -----------------
 Unlike browser's native XPath 1.0 processing which have very poor error reporting, the jQuery XPath 2 plugin reports syntax and evaluation errors with a great level of detail.
-Provided the XPath expressions not being that easy, it is extremely helpful to have good level of feedback from the processor.
+Provided that XPath expressions are not easy, it is extremely helpful to have good level of feedback from the processor.
 
 Below are examples of the detailed error reporting.
 
@@ -87,8 +87,8 @@ $().xpath("max((1,''))"); // Throws "Error: Input to max() contains a mix of not
 
 ### XPath 2.0 trace() function ###
 
-``` trace ``` is a very helpful XPath 2.0 function, that will let you print the result of sub-expression
-during its evaluation right into browser console log.
+``` trace ``` is a very helpful XPath 2.0 function, that will let you print the result of the sub-expression
+during its evaluation right into the browser console log.
 Function ``` trace ``` requires 2 arguments: first - any type, second - string, it prints its arguments to the console and returns the first argument to the evaluator.
 
 ```js
