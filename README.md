@@ -72,9 +72,9 @@ Below are examples of the detailed error reporting.
 
 ### Syntax errors ###
 ```js
-$().xpath("1 to "); // Throw "Error: Expected second operand in range expression"
-$().xpath("$*"); // Throws: "Error: Illegal use of wildcard in var expression variable name"
-$(document).xpath("self::document()"); // Throws: "Error: Unknown 'document' kind test"
+$().xpath("1 to "); // Throws "Error: Expected second operand in range expression"
+$().xpath("$*"); // Throws "Error: Illegal use of wildcard in var expression variable name"
+$(document).xpath("self::document()"); // Throws "Error: Unknown 'document' kind test"
 ```
 
 ### Evaluation errors ###
@@ -82,7 +82,7 @@ $(document).xpath("self::document()"); // Throws: "Error: Unknown 'document' kin
 ```js
 $().xpath("1+'2'") // Throws "Error: Arithmetic operator is not defined for provided arguments"
 $().xpath("self::node()"); // Throws "Error: In an axis step, the context item is not a node."
-$().xpath("max((1,''))"); // Throws "Error: Input to max() contains a mix of not comparable values"
+$().xpath("max((1,'2'))"); // Throws "Error: Input to max() contains a mix of not comparable values"
 ```
 
 ### XPath 2.0 trace() function ###
