@@ -99,7 +99,7 @@ cLXDOMAdapter.prototype.compareDocumentPosition	= function(oNode, oChild) {
 	if (((oNode.ownerDocument || oNode) != (oChild.ownerDocument || oChild)) || (aChain1[aChain1.length - 1] != aChain2[aChain2.length - 1]))
 		return 32 /* cNode.DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC */ | 1 /* cNode.DOCUMENT_POSITION_DISCONNECTED */;
 	//
-	for (nIndex = Math.min(nLength1 = aChain1.length, nLength2 = aChain2.length); nIndex; --nIndex)
+	for (nIndex = cMath.min(nLength1 = aChain1.length, nLength2 = aChain2.length); nIndex; --nIndex)
 		if ((oNode1 = aChain1[--nLength1]) != (oNode2 = aChain2[--nLength2])) {
 			//
 			if (oNode1.nodeType == 2 /* cNode.ATTRIBUTE_NODE */)
