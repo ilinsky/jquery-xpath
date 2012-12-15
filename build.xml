@@ -190,6 +190,7 @@
 				LXDOMAdapter.js"/>
 			<filelist dir="${source.adapters}/" files="
 				L2DOMAdapter.js,
+				L2HTMLDOMAdapter.js,
 				MSHTMLDOMAdapter.js,
 				MSXMLDOMAdapter.js"/>
 		</concat>

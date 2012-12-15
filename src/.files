@@ -4,6 +4,7 @@
 adapters/classes/Attr.js
 adapters/classes/LXDOMAdapter.js
 adapters/L2DOMAdapter.js
+adapters/L2HTMLDOMAdapter.js
 adapters/MSHTMLDOMAdapter.js
 adapters/MSXMLDOMAdapter.js
 # API implementation
