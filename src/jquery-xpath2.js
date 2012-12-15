@@ -12,10 +12,8 @@ var cHTMLDocument	= window.HTMLDocument,
 	oDocument	= window.document,
 	bOldMS	= !!oDocument.namespaces && !oDocument.createElementNS;	// Internet Explorer 8 or older
 
-//
-var oLXDOMAdapter	= new cLXDOMAdapter,
 // Create two separate HTML and XML contexts
-	oHTMLStaticContext	= new cStaticContext,
+var oHTMLStaticContext	= new cStaticContext,
 	oXMLStaticContext	= new cStaticContext;
 
 // Initialize HTML context (this has default xhtml namespace)
@@ -52,11 +50,11 @@ function fXPath2_evaluate(oQuery, sExpression, fNSResolver) {
 	// Evaluate expression
 	var aSequence,
 		oSequence	= new cQuery,
-		oAdapter	= oLXDOMAdapter;
+		oAdapter	= oL2DOMAdapter;
 
 	// Determine which DOMAdapter to use based on browser and DOM type
 	if (oNode && oNode.nodeType && bOldMS)
-		oAdapter	= "selectNodes" in oNode ? oMSXMLDOMAdapter : oMSHTMLDOMAdapter;
+		oAdapter	= "xml" in oNode ? oMSXMLDOMAdapter : oMSHTMLDOMAdapter;
 
 	// Evaluate expression tree
 	aSequence	= oExpression.evaluate(new cDynamicContext(oStaticContext, oNode, null, oAdapter));

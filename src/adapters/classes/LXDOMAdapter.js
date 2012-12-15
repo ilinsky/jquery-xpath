@@ -13,6 +13,9 @@ function cLXDOMAdapter() {
 
 cLXDOMAdapter.prototype	= new cDOMAdapter;
 
+// Create default static context object to enable access implementation functions
+var oLXDOMAdapter_staticContext	= new cStaticContext;
+
 // Standard members
 cLXDOMAdapter.prototype.getProperty	= function(oNode, sName) {
 	// Run native if there is one
@@ -22,8 +25,8 @@ cLXDOMAdapter.prototype.getProperty	= function(oNode, sName) {
 	// Otherwise run JS fallback
 	if (sName == "baseURI") {
 		var sBaseURI	= '',
-			fResolveUri	= oXPathEvaluator_XMLContext.getFunction('{' + "http://www.w3.org/2005/xpath-functions" + '}' + "resolve-uri"),
-			cXSString	= oXPathEvaluator_XMLContext.getDataType('{' + "http://www.w3.org/2001/XMLSchema" + '}' + "string");
+			fResolveUri	= oLXDOMAdapter_staticContext.getFunction('{' + "http://www.w3.org/2005/xpath-functions" + '}' + "resolve-uri"),
+			cXSString	= oLXDOMAdapter_staticContext.getDataType('{' + "http://www.w3.org/2001/XMLSchema" + '}' + "string");
 
 		for (var oParent = oNode, sUri; oParent; oParent = oParent.parentNode)
 			if (oParent.nodeType == 1 /* cNode.ELEMENT_NODE */ && (sUri = oParent.getAttribute("xml:base")))
@@ -58,20 +61,21 @@ cLXDOMAdapter.prototype.compareDocumentPosition	= function(oNode, oChild) {
 	//
 	var oAttr1	= null,
 		oAttr2	= null,
-		oAttr, oElement, nIndex;
+		aAttributes,
+		oAttr, oElement, nIndex, nLength;
 	if (oNode.nodeType == 2 /* cNode.ATTRIBUTE_NODE */) {
 		oAttr1	= oNode;
-		oNode	= oAttr1.ownerElement;
+		oNode	= this.getProperty(oAttr1, "ownerElement");
 	}
 	if (oChild.nodeType == 2 /* cNode.ATTRIBUTE_NODE */) {
 		oAttr2	= oChild;
-		oChild	= oAttr2.ownerElement;
+		oChild	= this.getProperty(oAttr2, "ownerElement");
 	}
 
 	// Compare attributes from same element
 	if (oAttr1 && oAttr2 && oNode && oNode == oChild) {
-		for (nIndex = 0; nIndex < oNode.attributes.length; nIndex++) {
-			oAttr	= oNode.attributes[nIndex];
+		for (nIndex = 0, aAttributes = this.getProperty(oNode, "attributes"), nLength = aAttributes.length; nIndex < nLength; nIndex++) {
+			oAttr	= aAttributes[nIndex];
 			if (oAttr == oAttr1)
 				return 32 /* cNode.DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC */ | 4 /* cNode.DOCUMENT_POSITION_FOLLOWING */;
 			if (oAttr == oAttr2)

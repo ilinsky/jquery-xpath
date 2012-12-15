@@ -1,7 +1,9 @@
 # XPath 2 engine
-xpath2.js/src/.files
+../../xpath2.js/src/.files
 # Browser adapters
+adapters/classes/Attr.js
 adapters/classes/LXDOMAdapter.js
+adapters/L2DOMAdapter.js
 adapters/MSHTMLDOMAdapter.js
 adapters/MSXMLDOMAdapter.js
 # API implementation

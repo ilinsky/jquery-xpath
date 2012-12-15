@@ -186,8 +186,10 @@
 
 		<concat destfile="${temp.dir}/xpath2-adapters-raw.js" fixlastline="yes">
 			<filelist dir="${source.adapters}/classes/" files="
+				Attr.js,
 				LXDOMAdapter.js"/>
 			<filelist dir="${source.adapters}/" files="
+				L2DOMAdapter.js,
 				MSHTMLDOMAdapter.js,
 				MSXMLDOMAdapter.js"/>
 		</concat>
