@@ -60,7 +60,7 @@ $().xpath("1.5 cast as xs:integer"); // Returns {Number} 1
 $(document).xpath("//my:body", function(prefix) {
 	if (prefix == "my")
 		return "http://www.w3.org/1999/xhtml";
-});	// Returns element body ('my' prefix resolved to XHTML namespace)
+});	// Returns {Element} body ('my' prefix resolved to XHTML namespace)
 ```
 
 Error reporting
