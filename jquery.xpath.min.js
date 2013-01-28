@@ -1,5 +1,5 @@
 /*
- * jQuery XPath plugin v0.2.2
+ * jQuery XPath plugin v0.2.3
  * https://github.com/ilinsky/jquery-xpath
  * Copyright 2013, Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
