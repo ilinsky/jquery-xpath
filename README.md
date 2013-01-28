@@ -1,23 +1,23 @@
-jQuery XPath 2 plugin
+jQuery XPath plugin
 =============
 
 This plugin is a fully featured XPath 2.0 query language implementation which can be used to query both HTML and XML documents in all web browsers.
-It uses the DOM-agnostic XPath 2.0 engine [xpath2.js](https://github.com/ilinsky/xpath2.js) originally developed for [Ample SDK UI Framework](https://github.com/clientside/amplesdk).
+It uses the DOM-agnostic XPath 2.0 engine [xpath.js](https://github.com/ilinsky/xpath.js) originally developed for [Ample SDK UI Framework](https://github.com/clientside/amplesdk).
 
 Usage
 -----------------
 
-Download and include ` jquery.xpath2.js ` or ` jquery.xpath2.min.js ` file on your page.
-Please be aware that the 'min' version does not have the detailed error messages that the ` jquery.xpath2.js ` has but has been efficiently minimised to reduce its file size.
+Download and include ` jquery.xpath.js ` or ` jquery.xpath.min.js ` file on your page.
+Please be aware that the 'min' version does not have the detailed error messages that the ` jquery.xpath.js ` has but has been efficiently minimised to reduce its file size.
 
 ```html
-<script type="text/javascript" src="jquery.xpath2.js"></script>
+<script type="text/javascript" src="jquery.xpath.js"></script>
 ```
 
 API Reference
 -----------------
 
-jQuery XPath 2 plugin comes with two easy to use entrance points:
+jQuery XPath plugin comes with two easy to use entrance points:
 
 1. ` $(context).xpath(expression, resolver) `
 2. ` $.xpath(context, expression, resolver) `
@@ -65,7 +65,7 @@ $(document).xpath("//my:body", function(prefix) {
 
 Error reporting
 -----------------
-Unlike browser's native XPath 1.0 processing which have very poor error reporting, the jQuery XPath 2 plugin reports syntax and evaluation errors with a great level of detail.
+Unlike browser's native XPath 1.0 processing which have very poor error reporting, the jQuery XPath plugin reports syntax and evaluation errors with a great level of detail.
 Provided that XPath expressions are not easy, it is extremely helpful to have good level of feedback from the processor.
 
 Below are examples of the detailed error reporting.

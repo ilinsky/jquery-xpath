@@ -1,5 +1,5 @@
 /*
- * jQuery XPath 2 plugin (with full XPath 2.0 language support)
+ * jQuery XPath plugin (with full XPath 2.0 language support)
  *
  * Copyright (c) 2012 Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
@@ -26,7 +26,7 @@ oHTMLStaticContext.defaultElementNamespace	= "http://www.w3.org/1999/xhtml";
 oXMLStaticContext.defaultFunctionNamespace	= oHTMLStaticContext.defaultFunctionNamespace;
 
 //
-function fXPath2_evaluate(oQuery, sExpression, fNSResolver) {
+function fXPath_evaluate(oQuery, sExpression, fNSResolver) {
 	// Return empty jQuery object if expression missing
 	if (typeof sExpression == "undefined" || sExpression === null)
 		sExpression	= '';
@@ -71,12 +71,12 @@ function fXPath2_evaluate(oQuery, sExpression, fNSResolver) {
 // Extend jQuery
 var oObject	= {};
 oObject.xpath	= function(oQuery, sExpression, fNSResolver) {
-	return fXPath2_evaluate(oQuery instanceof cQuery ? oQuery : new cQuery(oQuery), sExpression, fNSResolver);
+	return fXPath_evaluate(oQuery instanceof cQuery ? oQuery : new cQuery(oQuery), sExpression, fNSResolver);
 };
 cQuery.extend(cQuery, oObject);
 
 oObject	= {};
 oObject.xpath	= function(sExpression, fNSResolver) {
-	return fXPath2_evaluate(this, sExpression, fNSResolver);
+	return fXPath_evaluate(this, sExpression, fNSResolver);
 };
 cQuery.extend(cQuery.prototype, oObject);

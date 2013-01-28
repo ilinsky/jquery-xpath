@@ -2,4 +2,4 @@
 RewriteEngine on
 
 ##
-RewriteRule jquery.xpath2.js ../res/assemble.php?path=../src/
+RewriteRule jquery.xpath.js ../res/assemble.php?path=../src/

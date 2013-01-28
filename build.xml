@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 	// =================================================================
-	// ANT Build Script for XPath 2 jQuery Plugin project
+	// ANT Build Script for XPath jQuery Plugin project
 	// =================================================================
 -->
-<project name="Project Build Script - XPath 2 jQuery Plugin" default="BUILD_JQUERY_XPATH2" basedir=".">
+<project name="Project Build Script - XPath jQuery Plugin" default="BUILD_JQUERY_XPATH" basedir=".">
 	<!-- Local properties -->
 	<property file="build.properties" />
 
@@ -27,26 +27,26 @@
 	<property name="copying.js" value="res/build/COPYING.js" />
 
 	<!-- Default target -->
-	<target name="BUILD_JQUERY_XPATH2" description="Builds XPath 2 jQuery plugin project">
+	<target name="BUILD_JQUERY_XPATH" description="Builds XPath jQuery plugin project">
 		<!-- Remove target bin directory if exists -->
 		<delete dir="${target.dir}" failonerror="false"/>
 
 		<mkdir dir="${temp.dir}" />
 		<mkdir dir="${target.dir}" />
 
-		<antcall target="BUILD_JQUERY_XPATH2_PREPARE_CORE" />
-		<antcall target="BUILD_JQUERY_XPATH2_PREPARE_ADAPTERS" />
-		<antcall target="BUILD_JQUERY_XPATH2_PLUGIN" />
+		<antcall target="BUILD_JQUERY_XPATH_PREPARE_CORE" />
+		<antcall target="BUILD_JQUERY_XPATH_PREPARE_ADAPTERS" />
+		<antcall target="BUILD_JQUERY_XPATH_PLUGIN" />
 
 		<delete dir="${temp.dir}" />
 	</target>
 
-	<target name="BUILD_JQUERY_XPATH2_PREPARE_CORE">
-		<echo message="Building XPath2 core engine: ${temp.dir}/xpath2-core-raw.js" level="info"/>
+	<target name="BUILD_JQUERY_XPATH_PREPARE_CORE">
+		<echo message="Building XPath core engine: ${temp.dir}/xpath-core-raw.js" level="info"/>
 
-		<property name="source.core" value="src/xpath2.js/src/" />
+		<property name="source.core" value="src/xpath.js/src/" />
 
-		<concat destfile="${temp.dir}/xpath2-core-raw.js" fixlastline="yes">
+		<concat destfile="${temp.dir}/xpath-core-raw.js" fixlastline="yes">
 			<filelist dir="${source.core}/" files="
 				import.js"/>
 			<filelist dir="${source.core}/classes/" files="
@@ -179,12 +179,12 @@
 		</concat>
 	</target>
 
-	<target name="BUILD_JQUERY_XPATH2_PREPARE_ADAPTERS">
-		<echo message="Building XPath2 adapters: ${temp.dir}/xpath2-adapters-raw.js" level="info"/>
+	<target name="BUILD_JQUERY_XPATH_PREPARE_ADAPTERS">
+		<echo message="Building XPath adapters: ${temp.dir}/xpath-adapters-raw.js" level="info"/>
 
 		<property name="source.adapters" value="src/adapters/" />
 
-		<concat destfile="${temp.dir}/xpath2-adapters-raw.js" fixlastline="yes">
+		<concat destfile="${temp.dir}/xpath-adapters-raw.js" fixlastline="yes">
 			<filelist dir="${source.adapters}/classes/" files="
 				Attr.js,
 				LXDOMAdapter.js"/>
@@ -196,19 +196,19 @@
 		</concat>
 	</target>
 
-	<target name="BUILD_JQUERY_XPATH2_PLUGIN">
-		<echo message="Building jQuery XPath2 plugin: ${target.dir}/jquery.xpath2.js" level="info"/>
+	<target name="BUILD_JQUERY_XPATH_PLUGIN">
+		<echo message="Building jQuery XPath plugin: ${target.dir}/jquery.xpath.js" level="info"/>
 
-		<property name="source.jquery-xpath2" value="src/" />
+		<property name="source.jquery-xpath" value="src/" />
 
 		<!-- Glue plugin raw code -->
-		<concat destfile="${temp.dir}/jquery-xpath2-raw.js" fixlastline="yes">
+		<concat destfile="${temp.dir}/jquery-xpath-raw.js" fixlastline="yes">
 			<filelist dir="${temp.dir}/" files="
-				xpath2-core-raw.js"/>
+				xpath-core-raw.js"/>
 			<filelist dir="${temp.dir}/" files="
-				xpath2-adapters-raw.js"/>
-			<filelist dir="${source.jquery-xpath2}/" files="
-				jquery-xpath2.js"/>
+				xpath-adapters-raw.js"/>
+			<filelist dir="${source.jquery-xpath}/" files="
+				jquery-xpath.js"/>
 		</concat>
 
 		<!-- Copy copyright note and replace tokens -->
@@ -218,35 +218,35 @@
 			<replacefilter token="@project.version@"	value="${project.version}" />
 		</replace>
 
-		<!-- jquery.xpath2.js -->
-		<echo message="Building XPath2 jQuery: ${target.dir}/jquery.xpath2.js" level="info"/>
+		<!-- jquery.xpath.js -->
+		<echo message="Building XPath jQuery: ${target.dir}/jquery.xpath.js" level="info"/>
 		<exec executable="${executable.php}" failonerror="true">
 			<arg value="res/build/compiler/js.php" />
-			<arg value="${temp.dir}/jquery-xpath2-raw.js" />
-			<arg value="${temp.dir}/jquery-xpath2.js" />
+			<arg value="${temp.dir}/jquery-xpath-raw.js" />
+			<arg value="${temp.dir}/jquery-xpath.js" />
 			<!--arg value="- -obfuscate" /-->
 			<arg value="--strip-Source" />
 		</exec>
-		<concat destfile="${target.dir}/jquery.xpath2.js" fixlastline="yes">
+		<concat destfile="${target.dir}/jquery.xpath.js" fixlastline="yes">
 			<fileset file="${temp.dir}/copying.js" />
-			<fileset file="${temp.dir}/jquery-xpath2.js" />
+			<fileset file="${temp.dir}/jquery-xpath.js" />
 		</concat>
 
-		<!-- jquery.xpath2.min.js -->
-		<echo message="Building XPath2 jQuery (min): ${target.dir}/jquery.xpath2.min.js" level="info"/>
+		<!-- jquery.xpath.min.js -->
+		<echo message="Building XPath jQuery (min): ${target.dir}/jquery.xpath.min.js" level="info"/>
 		<exec executable="${executable.php}" failonerror="true">
 			<arg value="res/build/compiler/js.php" />
-			<arg value="${temp.dir}/jquery-xpath2-raw.js" />
-			<arg value="${temp.dir}/jquery-xpath2-min.js" />
+			<arg value="${temp.dir}/jquery-xpath-raw.js" />
+			<arg value="${temp.dir}/jquery-xpath-min.js" />
 			<arg value="--obfuscate" />
 			<arg value="--strip-Source" />
 			<!-- -->
 			<arg value="--strip-Debug" />
 			<arg value="--strip-Guard" />
 		</exec>
-		<concat destfile="${target.dir}/jquery.xpath2.min.js" fixlastline="yes">
+		<concat destfile="${target.dir}/jquery.xpath.min.js" fixlastline="yes">
 			<fileset file="${temp.dir}/copying.js" />
-			<fileset file="${temp.dir}/jquery-xpath2-min.js" />
+			<fileset file="${temp.dir}/jquery-xpath-min.js" />
 		</concat>
 
 	</target>
