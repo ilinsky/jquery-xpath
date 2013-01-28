@@ -32,7 +32,7 @@
     "bugs": "https://github.com/ilinsky/jquery-xpath/issues",
     "homepage": "https://github.com/ilinsky/jquery-xpath",
     "docs": "https://github.com/ilinsky/jquery-xpath",
-    "download": "http://code.jquery.com/#xpath",
+    "download": "https://github.com/ilinsky/jquery-xpath",
     "dependencies": {
         "jquery": ">=1.0"
     }
