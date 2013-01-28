@@ -1,0 +1,39 @@
+{
+    "name": "xpath",
+    "title": "jQuery XPath plugin",
+    "description": "jQuery plugin for querying XML and HTML documents with XPath 2.0",
+    "keywords": [
+        "xpath",
+        "xpath2",
+        "xpath 2",
+    ],
+    "version": "0.2.1",
+    "author": {
+        "name": "Sergey Ilinsky",
+        "url": "https://github.com/ilinsky/jquery-xpath/blob/0.2.1/AUTHORS.txt"
+    },
+    "maintainers": [
+        {
+            "name": "Sergey Ilinsky",
+            "email": "sergey@ilinsky.com",
+            "url": "http://www.ilinsky.com"
+        }
+    ],
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/ilinsky/jquery-xpath/blob/0.2.1/res/license/MIT-LICENSE.txt"
+        },
+        {
+            "type": "GPL",
+            "url": "https://github.com/ilinsky/jquery-xpath/blob/0.2.1/res/license/GPL-LICENSE.txt"
+        }
+    ],
+    "bugs": "https://github.com/ilinsky/jquery-xpath/issues",
+    "homepage": "https://github.com/ilinsky/jquery-xpath",
+    "docs": "https://github.com/ilinsky/jquery-xpath",
+    "download": "http://code.jquery.com/#xpath",
+    "dependencies": {
+        "jquery": ">=1.0"
+    }
+}

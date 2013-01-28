@@ -1,12 +1,12 @@
 /*
- * jQuery XPath plugin v0.2.0
+ * jQuery XPath plugin v0.2.1
  * https://github.com/ilinsky/jquery-xpath
- * Copyright 2012, Sergey Ilinsky
+ * Copyright 2013, Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  * Includes xpath.js - XPath 2.0 implementation in JavaScript
  * https://github.com/ilinsky/xpath.js
- * Copyright 2012, Sergey Ilinsky
+ * Copyright 2013, Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  */
