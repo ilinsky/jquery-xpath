@@ -6,10 +6,10 @@
         "xpath",
         "xpath2"
     ],
-    "version": "0.2.3",
+    "version": "0.2.4",
     "author": {
         "name": "Sergey Ilinsky",
-        "url": "https://github.com/ilinsky/jquery-xpath/blob/0.2.3/AUTHORS.txt"
+        "url": "https://github.com/ilinsky/jquery-xpath/blob/0.2.4/AUTHORS.txt"
     },
     "maintainers": [
         {
@@ -21,11 +21,11 @@
     "licenses": [
         {
             "type": "MIT",
-            "url": "https://github.com/ilinsky/jquery-xpath/blob/0.2.3/res/license/MIT-LICENSE.txt"
+            "url": "https://github.com/ilinsky/jquery-xpath/blob/0.2.4/res/license/MIT-LICENSE.txt"
         },
         {
             "type": "GPLv2",
-            "url": "https://github.com/ilinsky/jquery-xpath/blob/0.2.3/res/license/GPL-LICENSE.txt"
+            "url": "https://github.com/ilinsky/jquery-xpath/blob/0.2.4/res/license/GPL-LICENSE.txt"
         }
     ],
     "bugs": "https://github.com/ilinsky/jquery-xpath/issues",

@@ -1,5 +1,5 @@
 /*
- * jQuery XPath plugin v0.2.3
+ * jQuery XPath plugin v0.2.4
  * https://github.com/ilinsky/jquery-xpath
  * Copyright 2013, Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
@@ -49,9 +49,14 @@ var sNS_XSD	= "http://www.w3.org/2001/XMLSchema",
 	sNS_XML	= "http://www.w3.org/XML/1998/namespace";
 
 
-function cException(sCode, sMessage) {
+function cException(sCode
+		, sMessage
+	) {
+
 	this.code		= sCode;
-	this.message	= sMessage || oException_messages[sCode];
+	this.message	=
+					  sMessage ||
+					  oException_messages[sCode];
 };
 
 cException.prototype	= new cError;
@@ -2155,6 +2160,8 @@ function cLiteral() {
 
 };
 
+cLiteral.prototype.value	= null;
+
 function fLiteral_parse (oLexer, oStaticContext) {
 	if (!oLexer.eof())
 		return fNumericLiteral_parse(oLexer, oStaticContext)
@@ -2543,7 +2550,8 @@ cRangeExpr.prototype.evaluate	= function (oContext) {
 	if (!oRight.length)
 		return [];
 
-		sSource	= "second operand of 'to'";
+	sSource	= "second operand of 'to'";
+
 	fFunctionCall_assertSequenceCardinality(oContext, oRight, '?'
 			, sSource
 	);
@@ -5411,10 +5419,18 @@ fStaticContext_defineSystemFunction("index-of",	[[cXSAnyAtomicType, '*'], [cXSAn
 		return [];
 
 	
+	var vLeft	= oSearch;
+		if (vLeft instanceof cXSUntypedAtomic)
+		vLeft	= cXSString.cast(vLeft);
+
 	var oSequence	= [];
-	for (var nIndex = 0, nLength = oSequence1.length, vValue = oSearch.valueOf(); nIndex < nLength; nIndex++)
-		if (oSequence1[nIndex].valueOf() === vValue)
+	for (var nIndex = 0, nLength = oSequence1.length, vRight; nIndex < nLength; nIndex++) {
+		vRight	= oSequence1[nIndex];
+				if (vRight instanceof cXSUntypedAtomic)
+			vRight	= cXSString.cast(vRight);
+				if (vRight.valueOf() === vLeft.valueOf())
 			oSequence.push(new cXSInteger(nIndex + 1));
+	}
 
 	return oSequence;
 });
@@ -5432,11 +5448,17 @@ fStaticContext_defineSystemFunction("distinct-values",	[[cXSAnyAtomicType, '*'],
 		return null;
 
 	var oSequence	= [];
-	for (var nIndex = 0, nLength = oSequence1.length, vValue; nIndex < nLength; nIndex++) {
-		vValue = oSequence1[nIndex].valueOf();
-		for (var nRightIndex = 0, nRightLength = oSequence.length, bFound = false; (nRightIndex < nRightLength) &&!bFound; nRightIndex++)
-			if (oSequence[nRightIndex].valueOf() === vValue)
+	for (var nIndex = 0, nLength = oSequence1.length, vLeft; nIndex < nLength; nIndex++) {
+		vLeft	= oSequence1[nIndex];
+				if (vLeft instanceof cXSUntypedAtomic)
+			vLeft	= cXSString.cast(vLeft);
+		for (var nRightIndex = 0, nRightLength = oSequence.length, vRight, bFound = false; (nRightIndex < nRightLength) &&!bFound; nRightIndex++) {
+			vRight	= oSequence[nRightIndex];
+						if (vRight instanceof cXSUntypedAtomic)
+				vRight	= cXSString.cast(vRight);
+						if (vRight.valueOf() === vLeft.valueOf())
 				bFound	= true;
+		}
 		if (!bFound)
 			oSequence.push(oSequence1[nIndex]);
 	}
