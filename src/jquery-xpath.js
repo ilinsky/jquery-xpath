@@ -37,7 +37,7 @@ function fXPath_evaluate(oQuery, sExpression, fNSResolver) {
 		oNode	= null;
 
 	// Choose static context
-	var oStaticContext	= oNode && fXPath_isHTML(oNode) ? oHTMLStaticContext : oXMLStaticContext;
+	var oStaticContext	= oNode && (oNode.nodeType == 9 ? oNode : oNode.ownerDocument).createElement("div").tagName == "DIV" ? oHTMLStaticContext : oXMLStaticContext;
 
 	// Set static context's resolver
 	oStaticContext.namespaceResolver	= fNSResolver;
@@ -66,12 +66,6 @@ function fXPath_evaluate(oQuery, sExpression, fNSResolver) {
 		oSequence.push(oAdapter.isNode(oItem = aSequence[nIndex]) ? oItem : cStaticContext.xs2js(oItem));
 
 	return oSequence;
-};
-
-var rXPath_document	= /function\sHTMLDocument\(/;
-function fXPath_isHTML(oNode) {
-	var oDocument	= oNode.nodeType == 9 ? oNode : oNode.ownerDocument;
-	return rXPath_document.test(oDocument.constructor) || !!oDocument.all;
 };
 
 // Extend jQuery
