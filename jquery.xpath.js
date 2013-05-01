@@ -1,5 +1,5 @@
 /*
- * jQuery XPath plugin v0.2.4
+ * jQuery XPath plugin v0.2.5
  * https://github.com/ilinsky/jquery-xpath
  * Copyright 2013, Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
@@ -6312,7 +6312,7 @@ function fXPath_evaluate(oQuery, sExpression, fNSResolver) {
 	if (typeof oNode == "undefined")
 		oNode	= null;
 
-		var oStaticContext	= oNode && (oNode == oDocument || oNode.ownerDocument == oDocument) ? oHTMLStaticContext : oXMLStaticContext;
+		var oStaticContext	= oNode && (oNode.nodeType == 9 ? oNode : oNode.ownerDocument).createElement("div").tagName == "DIV" ? oHTMLStaticContext : oXMLStaticContext;
 
 		oStaticContext.namespaceResolver	= fNSResolver;
 
