@@ -1,12 +1,12 @@
 /*
- * jQuery XPath plugin v0.2.5
+ * jQuery XPath plugin v0.2.6
  * https://github.com/ilinsky/jquery-xpath
- * Copyright 2013, Sergey Ilinsky
+ * Copyright 2015, Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  * Includes xpath.js - XPath 2.0 implementation in JavaScript
  * https://github.com/ilinsky/xpath.js
- * Copyright 2013, Sergey Ilinsky
+ * Copyright 2015, Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
  *
  */
@@ -29,7 +29,10 @@ var cString		= window.String,
 	fIsFinite	= window.isFinite,
 	nNaN		= window.NaN,
 	nInfinity	= window.Infinity,
-		fString_trim	=(function() {
+		fWindow_btoa	= window.btoa,
+	fWindow_atob	= window.atob,
+	fWindow_parseInt= window.parseInt,
+	fString_trim	=(function() {
 		return cString.prototype.trim ? function(sValue) {return cString(sValue).trim();} : function(sValue) {
 			return cString(sValue).replace(/^\s+|\s+$/g, '');
 		};
@@ -2931,7 +2934,7 @@ function cXSAnyType() {
 
 };
 
-cXSAnySimpleType.prototype.builtInKind	= cXSConstants.ANYTYPE_DT;
+cXSAnyType.prototype.builtInKind	= cXSConstants.ANYTYPE_DT;
 
 
 function cXSAnySimpleType() {
@@ -3035,8 +3038,13 @@ cXSBase64Binary.cast	= function(vValue) {
 			return new cXSBase64Binary(aMatch[0]);
 		throw new cException("FORG0001");
 	}
-	if (vValue instanceof cXSHexBinary)
-		throw "Casting from 'xs:" + "hexBinary"+ "' to 'xs:" + "base64Binary"+ "' not implemented";
+	if (vValue instanceof cXSHexBinary) {
+		var aMatch	= vValue.valueOf().match(/.{2}/g),
+			aValue	= [];
+		for (var nIndex = 0, nLength = aMatch.length; nIndex < nLength; nIndex++)
+			aValue.push(cString.fromCharCode(fWindow_parseInt(aMatch[nIndex], 16)));
+		return new cXSBase64Binary(fWindow_btoa(aValue.join('')));
+	}
 		throw new cException("XPTY0004"
 			, "Casting value '" + vValue + "' to xs:hexBinary can never succeed"
 	);
@@ -3258,7 +3266,7 @@ cXSDateTime.cast	= function(vValue) {
 };
 
 function fXSDateTime_pad(vValue, nLength) {
-	sValue	= cString(vValue);
+	var sValue	= cString(vValue);
 	if (arguments.length < 2)
 		nLength	= 2;
 	return (sValue.length < nLength + 1 ? new cArray(nLength + 1 - sValue.length).join('0') : '') + sValue;
@@ -3742,8 +3750,15 @@ cXSHexBinary.cast	= function(vValue) {
 			return new cXSHexBinary(aMatch[0].toUpperCase());
 		throw new cException("FORG0001");
 	}
-	if (vValue instanceof cXSBase64Binary)
-		throw "Casting from 'xs:" + "base64Binary"+ "' to 'xs:" + "hexBinary"+ "' not implemented";
+	if (vValue instanceof cXSBase64Binary) {
+		var sValue	= fWindow_atob(vValue.valueOf()),
+			aValue	= [];
+		for (var nIndex = 0, nLength = sValue.length, sLetter; nIndex < nLength; nIndex++) {
+			sLetter = sValue.charCodeAt(nIndex).toString(16);
+			aValue.push(new cArray(3 - sLetter.length).join('0') + sLetter);
+		}
+		return new cXSHexBinary(aValue.join(''));
+	}
 		throw new cException("XPTY0004"
 			, "Casting value '" + vValue + "' to xs:hexBinary can never succeed"
 	);
@@ -4548,11 +4563,11 @@ hStaticContext_operators["divide-dayTimeDuration-by-dayTimeDuration"]	= function
 };
 
 hStaticContext_operators["subtract-dateTimes"]	= function(oLeft, oRight) {
-	throw "Operator function '" + "subtract-dateTimes" + "' not implemented";
+	return fOperator_dayTimeDuration_fromSeconds(fOperator_dateTime_toSeconds(oLeft) - fOperator_dateTime_toSeconds(oRight));
 };
 
 hStaticContext_operators["subtract-dates"]	= function(oLeft, oRight) {
-	throw "Operator function '" + "subtract-dates" + "' not implemented";
+	return fOperator_dayTimeDuration_fromSeconds(fOperator_dateTime_toSeconds(oLeft) - fOperator_dateTime_toSeconds(oRight));
 };
 
 hStaticContext_operators["subtract-times"]	= function(oLeft, oRight) {
@@ -4643,9 +4658,10 @@ function fOperator_addYearMonthDuration2DateTime(oLeft, oRight, sOperator) {
 function fOperator_addDayTimeDuration2DateTime(oLeft, oRight, sOperator) {
 	var oValue;
 	if (oLeft instanceof cXSDate) {
+		var nValue	= (oRight.hours * 60 + oRight.minutes) * 60 + oRight.seconds;
 		oValue	= new cXSDate(oLeft.year, oLeft.month, oLeft.day, oLeft.timezone, oLeft.negative);
-		oValue.day	= oValue.day + oRight.day * (sOperator == '-' ?-1 : 1);
-		fXSDate_normalize(oValue);
+		oValue.day	= oValue.day + oRight.day * (sOperator == '-' ?-1 : 1) - 1 * (nValue && sOperator == '-');
+				fXSDate_normalize(oValue);
 	}
 	else
 	if (oLeft instanceof cXSDateTime) {
@@ -4654,7 +4670,7 @@ function fOperator_addDayTimeDuration2DateTime(oLeft, oRight, sOperator) {
 		oValue.minutes	= oValue.minutes + oRight.minutes * (sOperator == '-' ?-1 : 1);
 		oValue.hours	= oValue.hours + oRight.hours * (sOperator == '-' ?-1 : 1);
 		oValue.day		= oValue.day + oRight.day * (sOperator == '-' ?-1 : 1);
-		fXSDateTime_normalize(oValue);
+				fXSDateTime_normalize(oValue);
 	}
 	return oValue;
 };
@@ -4685,6 +4701,18 @@ function fOperator_yearMonthDuration_fromMonths(nValue) {
 
 function fOperator_time_toSeconds(oTime) {
 	return oTime.seconds + (oTime.minutes - (oTime.timezone != null ? oTime.timezone % 60 : 0) + (oTime.hours - (oTime.timezone != null ? ~~(oTime.timezone / 60) : 0)) * 60) * 60;
+};
+
+function fOperator_dateTime_toSeconds(oValue) {
+	var oDate	= new cDate((oValue.negative ? -1 : 1) * oValue.year, oValue.month, oValue.day, 0, 0, 0, 0);
+	if (oValue instanceof cXSDateTime) {
+		oDate.setHours(oValue.hours);
+		oDate.setMinutes(oValue.minutes);
+		oDate.setSeconds(oValue.seconds);
+	}
+	if (oValue.timezone != null)
+		oDate.setMinutes(oDate.getMinutes() - oValue.timezone);
+	return oDate.getTime() / 1000;
 };
 
 
