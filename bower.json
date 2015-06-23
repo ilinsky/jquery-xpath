@@ -5,7 +5,7 @@
 	"homepage":	"https://github.com/ilinsky/jquery-xpath",
 	"authors":	[
 		"Sergey Ilinsky <sergey@ilinsky.com>"
-	},
+	],
 	"license":	"MIT",
 	"keywords":	[
 		"jquery",
