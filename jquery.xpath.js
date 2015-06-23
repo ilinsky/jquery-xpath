@@ -1,5 +1,5 @@
 /*
- * jQuery XPath plugin v0.2.6
+ * jQuery XPath plugin v0.3.0
  * https://github.com/ilinsky/jquery-xpath
  * Copyright 2015, Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
@@ -1036,7 +1036,7 @@ hComparisonExpr_ValueComp_operators['ge']	= function(oLeft, oRight, oContext) {
 
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hStaticContext_operators["numeric-greater-than"].call(oContext, oLeft, oRight) || hStaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
+			sOperator	= "numeric-less-than";
 	}
 	else
 	if (oLeft instanceof cXSBoolean) {
@@ -1085,7 +1085,7 @@ hComparisonExpr_ValueComp_operators['le']	= function(oLeft, oRight, oContext) {
 
 	if (fXSAnyAtomicType_isNumeric(oLeft)) {
 		if (fXSAnyAtomicType_isNumeric(oRight))
-			return hStaticContext_operators["numeric-less-than"].call(oContext, oLeft, oRight) || hStaticContext_operators["numeric-equal"].call(oContext, oLeft, oRight);
+			sOperator	= "numeric-greater-than";
 	}
 	else
 	if (oLeft instanceof cXSBoolean) {
