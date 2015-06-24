@@ -275,7 +275,7 @@
 							"0," .
 							"this,".
 							"'" . join(" ", $this->aStrings) . "'.split(' ')".
-						")";
+						");";
 
 			$this->output	= $sData;
 		}

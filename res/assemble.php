@@ -19,7 +19,7 @@
 //				"var d = new Date;" .
 				"(function(){" .
 					$output .
-				"})()".
+				"})();".
 //				";alert(new Date - d)" .
 				"";
 	}

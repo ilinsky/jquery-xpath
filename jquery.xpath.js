@@ -1,5 +1,5 @@
 /*
- * jQuery XPath plugin v0.3.0
+ * jQuery XPath plugin v0.3.1
  * https://github.com/ilinsky/jquery-xpath
  * Copyright 2015, Sergey Ilinsky
  * Dual licensed under the MIT and GPL licenses.
@@ -6318,10 +6318,10 @@ oMSXMLDOMAdapter.getElementById	= function(oDocument, sId) {
 
 
 
-var cHTMLDocument	= window.HTMLDocument,
-	cQuery		= window.jQuery,
+var cQuery		= window.jQuery,
 	oDocument	= window.document,
-	bOldMS	= !!oDocument.namespaces && !oDocument.createElementNS,		bOldW3	= !bOldMS && oDocument.documentElement.namespaceURI != "http://www.w3.org/1999/xhtml";
+		bOldMS	= !!oDocument.namespaces && !oDocument.createElementNS,
+		bOldW3	= !bOldMS && oDocument.documentElement.namespaceURI != "http://www.w3.org/1999/xhtml";
 
 var oHTMLStaticContext	= new cStaticContext,
 	oXMLStaticContext	= new cStaticContext;
@@ -6377,4 +6377,4 @@ oObject.xpath	= function(sExpression, fNSResolver) {
 };
 cQuery.extend(cQuery.prototype, oObject);
 
-})()
+})();

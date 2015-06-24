@@ -2,7 +2,7 @@
 	"name":	"jquery-xpath",
 	"title":	"jQuery XPath plugin",
 	"description":	"jQuery plugin for querying XML and HTML documents with XPath 2.0",
-	"version":	"0.3.0",
+	"version":	"0.3.1",
 	"homepage":	"https://github.com/ilinsky/jquery-xpath",
 	"author":	{
 		"name":		"Sergey Ilinsky",
@@ -25,7 +25,8 @@
 	"keywords":	[
 		"jquery",
 		"xpath",
-		"xpath2"
+		"xpath2",
+		"jquery-plugin"
 	],
 	"dependencies":	{
 		"jquery":	">=1.0.0"

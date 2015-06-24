@@ -7,10 +7,11 @@
  *
  */
 
-var cHTMLDocument	= window.HTMLDocument,
-	cQuery		= window.jQuery,
+var cQuery		= window.jQuery,
 	oDocument	= window.document,
-	bOldMS	= !!oDocument.namespaces && !oDocument.createElementNS,	// Internet Explorer 8 or older
+	// Internet Explorer 8 or older
+	bOldMS	= !!oDocument.namespaces && !oDocument.createElementNS,
+	// Older other browsers
 	bOldW3	= !bOldMS && oDocument.documentElement.namespaceURI != "http://www.w3.org/1999/xhtml";
 
 // Create two separate HTML and XML contexts

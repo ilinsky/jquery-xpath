@@ -69,7 +69,7 @@
 		$sOutput	=	"".
 						"(function () {\n" .
 							$sOutput . "\n" .
-						"})()" .
+						"})();" .
 						"";
 	}
 
